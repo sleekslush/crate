@@ -136,8 +136,7 @@ public class Planner extends AnalyzedStatementVisitor<Planner.Context, Plan> {
         return consumingPlanner.plan(analysis);
     }
 
-    @Override
-    protected Plan visitUpdateStatement(UpdateAnalyzedStatement statement, Context context) {
+    protected Plan visitUpdateStatementOld(UpdateAnalyzedStatement statement, Context context) {
         Plan plan = new Plan();
         assert statement.sourceRelation() instanceof TableRelation : "sourceRelation of update statement must be a TableRelation";
         TableRelation tableRelation = (TableRelation) statement.sourceRelation();
@@ -160,6 +159,11 @@ public class Planner extends AnalyzedStatementVisitor<Planner.Context, Plan> {
             }
         }
         return plan;
+    }
+
+    @Override
+    protected Plan visitUpdateStatement(UpdateAnalyzedStatement statement, Context context) {
+        return consumingPlanner.plan(statement);
     }
 
     @Override

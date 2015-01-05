@@ -94,7 +94,10 @@ public class TransportSQLAction extends TransportBaseSQLAction<SQLRequest, SQLRe
         long rowCount = 0;
         if (expectsAffectedRows) {
             if (rows.length >= 1 && rows[0].length >= 1) {
-                rowCount = ((Number) rows[0][0]).longValue();
+                //rowCount = ((Number) rows[0][0]).longValue();
+                for (Object[] row : rows) {
+                    rowCount += ((Number) row[0]).longValue();
+                }
             }
             rows = TaskResult.EMPTY_ROWS;
         } else {
